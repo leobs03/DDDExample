@@ -1,4 +1,5 @@
 ﻿using Domain.Commands;
+using Domain.NovaPasta;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,16 +9,30 @@ namespace Application.Controllers
     [ApiController]
     public class VeiculoController : ControllerBase
     {
-        [HttpPost("CadastrarVeiculo")]
-        public IActionResult PostAsync([FromBody] VeiculoCommand Command)
+        private readonly IVeiculoService _veiculoservice;
+        private object command;
+
+        public VeiculoController(IVeiculoService veiculoservice)
+        {
+            _veiculoservice = veiculoservice;
+        }
+
+        [HttpPost]
+        [Route("CadastrarVeiculo")]
+        public async Task<IActionResult> PostAsync([FromBody] VeiculoCommand command)
+        {
+            await _veiculoservice.PostAsync(command);
+            return Ok();
+        }
+        [HttpGet]
+        [Route("SimularAluguel")]
+        public IActionResult GetAsync() 
         {
             return Ok();
         }
-        public IActionResult SimularAluguel() 
-        {
-            return Ok();
-        }
-        public IActionResult Alugar()
+        [HttpPost]
+        [Route("Alugar")]
+        public IActionResult PostAsync()
         {
             return Ok();
         }
