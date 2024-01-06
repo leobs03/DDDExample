@@ -10,7 +10,7 @@ namespace Domain.NovaPasta
     public interface IVeiculoService
     {
         //Interface é um contrato, apenas usamos para adicionar métodos não é feita implementação de nada
-        Task PostAsync(VeiculoCommand command);
+        Task<string> PostAsync(VeiculoCommand command);
         void PostAsync();
         void GetAsync();
     }
