@@ -35,7 +35,7 @@ namespace Service.Services
               && command.TipoVeiculo != ETipoVeiculo.Sedan)
                 return "O tipo de veículo não é permitido";
 
-            return "Cadastrado com sucesso";
+            return _veiculoRepository.PostAsync(command);
         }
     }
 }
