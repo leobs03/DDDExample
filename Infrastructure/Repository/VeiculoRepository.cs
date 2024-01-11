@@ -1,32 +1,27 @@
 ﻿using Dapper;
+using Domain.Commands;
 using Domain.Entidades;
 using Domain.Interfaces;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace Infrastructure.Repository
 {
     public class VeiculoRepository: IVeiculoRepository
     {
-        private String stringconnection = "";
-        public async Task <string> PostAsync(Veiculo command)
+        String conexao = @"Server=(localdb)\\mssqllocaldb;Database=AluguelVeiculos;Trusted_Connection=True;MultipleActiveResultSets=True";
+        public async Task <string> PostAsync(VeiculoCommand command)
         {
             string queryInsert = @"
             INSERT INTO Veiculo(Placa, AnoFabricacao, TipoVeiculo, Estado, MontadoraID)
             VALUES(@Placa, @AnoFabricacao, @TipoVeiculo, @Estado, @MontadoraID)";
 
-            using (var conn = new SqlConnection())
+            using (SqlConnection conn = new SqlConnection(conexao))
             {
                 conn.Execute(queryInsert, new
                 {
                     Placa = command.Placa,
                     AnoFabricacao = command.AnoFabricacao,
-                    TipoVeiculo = command.TipoVeiculo,
+                    TipoVeiculoID = (int)command.TipoVeiculo,
                     Estado = command.Estado,
                     MontadoraID = command.Montadora
                 });
@@ -43,5 +38,9 @@ namespace Infrastructure.Repository
         
         }
 
+        public Task<string> PostAsync(VeiculoCommand command)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

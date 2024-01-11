@@ -1,5 +1,6 @@
 ﻿using Domain.Commands;
 using Domain.Enums;
+using Domain.Interfaces;
 using Domain.NovaPasta;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,18 @@ namespace Service.Services
 {
     public class VeiculoService : IVeiculoService
     {
+        private readonly IVeiculoRepository _repository;
+
+        public VeiculoService(IVeiculoRepository repository)
+        {
+            _repository = repository;
+        }
+
         public void GetAsync()
         {
             throw new NotImplementedException();
         }
-
-        public void PostAsync()
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public async Task<string> PostAsync(VeiculoCommand command)
         {
@@ -32,12 +36,19 @@ namespace Service.Services
 
             if (command.TipoVeiculo != ETipoVeiculo.SUV
               && command.TipoVeiculo != ETipoVeiculo.Hatch
-              && command.TipoVeiculo != ETipoVeiculo.Sedan)
+              && command.TipoVeiculo != ETipoVeiculo.Sedan
+              )
                 return "O tipo de veículo não é permitido";
 
-            return _veiculoRepository.PostAsync(command);
+            return await _repository.PostAsync(command);
+        }
+
+        public void PostAsync()
+        {
+            throw new NotImplementedException();
         }
     }
+
 }
 
 
