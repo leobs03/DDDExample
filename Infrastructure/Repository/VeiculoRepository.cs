@@ -8,12 +8,12 @@ namespace Infrastructure.Repository
 {
     public class VeiculoRepository: IVeiculoRepository
     {
-        String conexao = @"Server=(localdb)\\mssqllocaldb;Database=AluguelVeiculos;Trusted_Connection=True;MultipleActiveResultSets=True";
+        String conexao = @"Server=(localdb)\mssqllocaldb;Database=AluguelVeiculos;Trusted_Connection=True;MultipleActiveResultSets=True";
         public async Task <string> PostAsync(VeiculoCommand command)
         {
             string queryInsert = @"
             INSERT INTO Veiculo(Placa, AnoFabricacao, TipoVeiculo, Estado, MontadoraID)
-            VALUES(@Placa, @AnoFabricacao, @TipoVeiculo, @Estado, @MontadoraID)";
+            VALUES(@Placa, @AnoFabricacao, @TipoVeiculo, @Estado, @Montadora)";
 
             using (SqlConnection conn = new SqlConnection(conexao))
             {
@@ -21,9 +21,9 @@ namespace Infrastructure.Repository
                 {
                     Placa = command.Placa,
                     AnoFabricacao = command.AnoFabricacao,
-                    TipoVeiculoID = (int)command.TipoVeiculo,
+                    TipoVeiculo = (int)command.TipoVeiculo,
                     Estado = command.Estado,
-                    MontadoraID = command.Montadora
+                    Montadora = (int)command.Montadora
                 });
                 return "Veiculo cadastrado com sucesso";
             }
@@ -38,9 +38,5 @@ namespace Infrastructure.Repository
         
         }
 
-        public Task<string> PostAsync(VeiculoCommand command)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
