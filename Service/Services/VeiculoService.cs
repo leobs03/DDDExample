@@ -47,6 +47,12 @@ namespace Service.Services
         {
             throw new NotImplementedException();
         }
+        public async Task<IEnumerable<VeiculoCommand>> GetVeiculosDisponiveis()
+        {
+            return await _repository.GetVeiculosDisponiveis();
+        }
+
+       
     }
 
 }
