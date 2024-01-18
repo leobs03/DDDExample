@@ -2,6 +2,7 @@
 using Domain.Enums;
 using Domain.Interfaces;
 using Domain.NovaPasta;
+using Infrastructure.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
